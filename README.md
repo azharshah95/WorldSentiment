@@ -2,6 +2,8 @@ To launch the file, create virtual environment.
 
 This repo is working for Twitter tweets using Twitter API v2 Elevated.
 
+You would also need to add a config.ini file and add your Twitter Developer credentials. 
+
 Libraries and Versions:
 
 certifi==2022.6.15.2
