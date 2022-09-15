@@ -22,8 +22,12 @@ api = tweepy.API(auth)
 def get_tweets(keyword: str) -> List[str]:
   all_tweets = []
 
-  for tweet in api.search_tweets(q=keyword, lang='en', count=100):
-    all_tweets.append(tweet.text)
+  for tweet in api.search_tweets(q=keyword, lang='en', count=100, tweet_mode="extended"):
+    if 'retweeted_status' in tweet._json:
+      fullTweet = tweet._json['retweeted_status']['full_text']
+      all_tweets.append(fullTweet)
+    else:
+      all_tweets.append(tweet.full_text)
   
   return all_tweets
 
@@ -48,7 +52,6 @@ def generate_average_sentiment_score(keyword: str) -> int:
   tweets = get_tweets(keyword)
   tweets_clean = clean_tweets(tweets)
   sentiment_scores = get_sentiment(tweets_clean)
-
   average_score = statistics.mean(sentiment_scores)
 
   return average_score
